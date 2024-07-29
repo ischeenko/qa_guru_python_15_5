@@ -2,7 +2,6 @@ import os
 from selene import browser, have, command
 
 
-
 def test_demoqa_todo():
     browser.open('/automation-practice-form')
     browser.element('#firstName').type('Alexander')
@@ -32,5 +31,5 @@ def test_demoqa_todo():
         "images.jpeg",
         "Saki",
         "NCR Delhi",
-        )
+    )
     )

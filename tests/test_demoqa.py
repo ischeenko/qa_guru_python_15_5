@@ -1,26 +1,19 @@
-import os
-from selene import browser, have, command
+from tests.pages.registration_page import RegistrationFormPage
 
 
-def test_demoqa_todo():
-    browser.open('/automation-practice-form')
-    browser.element('#firstName').type('Alexander')
-    browser.element('#lastName').type('Ischenko')
-    browser.element('#userEmail').type('ischeenko@gmail.com')
-    browser.element('[for="gender-radio-1"]').click()
-    browser.element('#userNumber').type('7978150151')
-    browser.element('#dateOfBirthInput').click()
-    browser.element('.react-datepicker__month-select option[value="0"]').click()
-    browser.element('.react-datepicker__year-select option[value="1994"').click()
-    browser.element('.react-datepicker__day.react-datepicker__day--013').click()
-    browser.element('#subjectsInput').type('English').press_enter()
-    browser.element('[for="hobbies-checkbox-1"]').perform(command.js.scroll_into_view).click()
-    browser.element('#uploadPicture').send_keys(os.path.abspath('images.jpeg'))
-    browser.element('#currentAddress').type('Saki')
-    browser.element("#react-select-3-input").type('NCR').press_enter()
-    browser.element('#react-select-4-input').type('Delhi').press_enter()
-    browser.element('#submit').click()
-    browser.element('.modal-content').element('table').all('tr').all('td').even.should(have.exact_texts(
+def test_sucess_registration_demoqa():
+    registration_page = RegistrationFormPage()
+    registration_page.open()
+    registration_page.fill_first_name('Alexander')
+    registration_page.fill_last_name('Ischenko')
+    registration_page.fill_email('ischeenko@gmail.com')
+    registration_page.choose_gender('Male')
+    registration_page.fill_number('7978150151')
+    registration_page.fill_date_of_birth('13', 'January', '1994')
+    registration_page.choose_subject_and_hobby('English', 'Sports')
+    registration_page.upload_file('resources/images.jpeg')
+    registration_page.fill_address('Saki', 'NCR', 'Delhi')
+    registration_page.should_registerted_user(
         "Alexander Ischenko",
         "ischeenko@gmail.com",
         "Male",
@@ -30,6 +23,5 @@ def test_demoqa_todo():
         "Sports",
         "images.jpeg",
         "Saki",
-        "NCR Delhi",
-    )
+        "NCR Delhi"
     )

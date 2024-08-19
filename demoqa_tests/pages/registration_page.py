@@ -1,4 +1,4 @@
-from pages.utils import path_generate
+from demoqa_tests.utils import path_generate
 from selene import browser, have, command
 
 
@@ -38,7 +38,7 @@ class RegistrationFormPage:
 
     def upload_file(self, value):
         browser.element('#uploadPicture').set_value(path_generate.generate_path(
-        value))
+            value))
 
     def fill_address(self, address, state, city):
         browser.element('#currentAddress').type(address)

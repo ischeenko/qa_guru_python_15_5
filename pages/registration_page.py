@@ -1,4 +1,4 @@
-import os
+from pages.utils import path_generate
 from selene import browser, have, command
 
 
@@ -37,7 +37,8 @@ class RegistrationFormPage:
             command.js.scroll_into_view).click()
 
     def upload_file(self, value):
-        browser.element('#uploadPicture').send_keys(os.path.abspath(value))
+        browser.element('#uploadPicture').set_value(path_generate.generate_path(
+        value))
 
     def fill_address(self, address, state, city):
         browser.element('#currentAddress').type(address)

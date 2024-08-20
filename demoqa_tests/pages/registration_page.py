@@ -1,11 +1,9 @@
 from demoqa_tests.utils import path_generate
 from selene import browser, have, command
-import demoqa_tests.data
-
+from demoqa_tests.data.user import User
 
 
 class RegistrationFormPage:
-
 
     def open(self):
         browser.open('/automation-practice-form')
@@ -41,7 +39,7 @@ class RegistrationFormPage:
 
     def upload_file(self, value):
         browser.element('#uploadPicture').set_value(path_generate.generate_path(
-        value))
+            value))
 
     def fill_address(self, address, state, city):
         browser.element('#currentAddress').type(address)
@@ -50,28 +48,27 @@ class RegistrationFormPage:
         browser.element('#submit').click()
 
     def register(self, user: User):
-        self.open()
         self.fill_first_name(user.first_name)
         self.fill_last_name(user.last_name)
         self.fill_email(user.email)
         self.choose_gender(user.gender)
-        self.fill_date_of_birth(user.date_of_birth)
+        self.fill_number(user.phone_number)
+        self.fill_date_of_birth(user.date_of_birth_day, user.date_of_birth_month, user.date_of_birth_year)
         self.choose_subject_and_hobby(user.subject, user.hobby)
         self.upload_file(user.file)
         self.fill_address(user.address, user.state, user.city)
 
-    def should_register(self, user: User):
-        browser.element('.modal-content').element('table').all('tr').all(
-            'td').even.should(have.exact_texts(
+    def should_register_user_with(self, user: User):
+        browser.element('.table').all('td').even.should(have.exact_texts(
             f'{user.first_name} {user.last_name}',
             user.email,
             user.gender,
-            user.date_of_birth,
+            user.phone_number,
+            f'{user.date_of_birth_day} {user.date_of_birth_month},{user.date_of_birth_year}',
             user.subject,
             user.hobby,
             user.file,
             user.address,
-            user.state,
-            user.city
+            f'{user.state} {user.city}'
         )
         )

@@ -11,7 +11,7 @@ def test_sucess_registration_demoqa():
     registration_page.fill_number('7978150151')
     registration_page.fill_date_of_birth('13', 'January', '1994')
     registration_page.choose_subject_and_hobby('English', 'Sports')
-    registration_page.upload_file('resources/images.jpeg')
+    registration_page.upload_file('images.jpeg')
     registration_page.fill_address('Saki', 'NCR', 'Delhi')
     registration_page.should_registerted_user(
         "Alexander Ischenko",
